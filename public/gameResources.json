@@ -1,0 +1,22 @@
+[
+  {
+      "id": "light",
+      "name": "Light"
+  },
+  {
+      "id": "dark",
+      "name": "Dark"
+  },
+  {
+      "id": "wood",
+      "name": "Wood"
+  },
+  {
+      "id": "rock",
+      "name": "Rock"
+  },
+  {
+      "id": "iron",
+      "name": "Iron"
+  }
+]
