@@ -1,0 +1,22 @@
+[
+  {
+    "id": "void",
+    "name": "Expand",
+    "description": "The Void",
+    "costs": [],
+    "rewards": ["light"],
+    "unlocks": ["primordial"],
+    "unlocked": true,
+    "repeatable": false
+  },
+  {
+    "id": "primordial",
+    "name": "Cooldown",
+    "description": "The singularity burns",
+    "costs": [],
+    "rewards": ["dark"],
+    "unlocks": [""],
+    "unlocked": false,
+    "repeatable": false
+  }
+]

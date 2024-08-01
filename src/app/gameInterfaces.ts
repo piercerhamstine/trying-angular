@@ -8,9 +8,13 @@ export interface UseableResource{
     total: number
 }
 
-export interface Action{
+export interface GameAction{
     id: string,
     name: string,
-    callback: {(): void;},
-    reward: Resource
+    description: string,
+    costs: UseableResource[],
+    rewards: string[],
+    unlocks: string[],
+    unlocked: boolean,
+    repeatable: boolean
 }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import {Action, Resource, UseableResource} from './gameInterfaces';
+import {Resource, UseableResource} from './gameInterfaces';
 import  data from '../../public/gameResources.json';
 
 @Injectable({

@@ -2,6 +2,7 @@ import {Component, inject, Input} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { InventoryService } from './inventory.service';
+import { GameStateService } from './gamestate.service';
 import { UseableResource } from './gameInterfaces';
 
 @Component({
@@ -27,38 +28,72 @@ import { UseableResource } from './gameInterfaces';
     imports: [],
     template: `
       <div>
-        @if(this.inventory.CanAffordCosts(cost)){
-            <a href="#" (click)="OnAction()">{{actionName}}</a>
-        }@else{
-            <a>{{actionName}} - Can't afford</a>
-        }
+      <p>{{description}} -
+      @if(this.inventory.CanAffordCosts(this.costs)){
+        [<a href=# (click)="OnAction()">{{name}}</a>]
+      }@else{
+        [<a>Cannot Afford</a>]
+      }
+      </p>
       </div>
     `,
     styleUrls: ['./app.component.css'],
   })
   export class ActionComponent {
     OnAction(){
-        this.cost.forEach((item: UseableResource)=>{
-            this.inventory.RemoveResource(item.id, item.total);
-        })
+      this.unlocks.forEach((unlock)=>{
+        this.gameState.UnlockAction(unlock);
+      });
+
+      this.rewards.forEach((reward)=>{
+        this.inventory.AddResource(reward);
+      })
+
+      if(!this.repeatable){
+        this.gameState.LockAction(this.id);
+      }
     }
-    @Input() actionName = "";
-    @Input() reward = [];
-    @Input() cost: UseableResource[] = [];
+    @Input() id = "";
+    @Input() name = "";
+    @Input() description = "";
+    @Input() costs: UseableResource[] = [];
+    @Input() rewards: string[] = [];
+    @Input() unlocks: string[] = [];
+    @Input() repeatable = false;
     inventory = inject(InventoryService);
+    gameState = inject(GameStateService);
 }
 
+@Component({
+  selector: 'game-actions',
+  standalone: true,
+  imports: [ActionComponent],
+  template: `
+      <div>
+        @for(unlockedAction of this.gameState.GetUnlockedActions(); track unlockedAction.id){
+            <action id=unlockedAction.id [name]=unlockedAction.name
+            [description]=unlockedAction.description [unlocks]=unlockedAction.unlocks
+            [repeatable]=unlockedAction.repeatable [rewards]=unlockedAction.rewards
+            [costs]=unlockedAction.costs/>
+        }
+      </div>
+  `,
+  styleUrls: ['./app.component.css'],
+})
+export class GameActionsComponent {
+  gameState = inject(GameStateService);
+}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, InventoryComponent, ActionComponent],
+  imports: [RouterOutlet, InventoryComponent, GameActionsComponent],
   template: `
     <div>
         <h1>The Void</h1>
         <p (click)="OnAdd()">Add Item</p>
         <p (click)="OnRemove()">Remove Item</p>
-        <action actionName="Create" [cost]="data"/>
+        <game-actions/>
         <inventory/>
     </div>
   `,
@@ -69,5 +104,4 @@ export class AppComponent {
   OnAdd(){this.inventory.AddResource("light")};
   OnRemove(){this.inventory.RemoveResource("light", 1)};
   inventory = inject(InventoryService);
-  data: UseableResource[] = [{id: "light", total: 2}];
 }
