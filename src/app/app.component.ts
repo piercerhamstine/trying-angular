@@ -34,6 +34,10 @@ import { UseableResource } from './gameInterfaces';
       }@else{
         [<a>Cannot Afford</a>]
       }
+
+      @for(cost of this.costs; track cost.id){
+        -{{cost.total}} {{cost.id}}
+      }
       </p>
       </div>
     `,
@@ -48,6 +52,10 @@ import { UseableResource } from './gameInterfaces';
       this.rewards.forEach((reward)=>{
         this.inventory.AddResource(reward);
       })
+
+      this.costs.forEach((cost)=>{
+        this.inventory.RemoveResource(cost.id, cost.total);
+      });
 
       if(!this.repeatable){
         this.gameState.LockAction(this.id);
@@ -71,7 +79,7 @@ import { UseableResource } from './gameInterfaces';
   template: `
       <div>
         @for(unlockedAction of this.gameState.GetUnlockedActions(); track unlockedAction.id){
-            <action id=unlockedAction.id [name]=unlockedAction.name
+            <action [id]=unlockedAction.id [name]=unlockedAction.name
             [description]=unlockedAction.description [unlocks]=unlockedAction.unlocks
             [repeatable]=unlockedAction.repeatable [rewards]=unlockedAction.rewards
             [costs]=unlockedAction.costs/>

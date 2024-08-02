@@ -20,6 +20,7 @@ export class GameStateService{
   }
 
   GetUnlockedActions(){
+
     return this.unlockedActions;
   }
 
@@ -28,9 +29,8 @@ export class GameStateService{
       if(action.id === id){
         action.unlocked = false;
         this.lockedActions.push(action);
+        this.unlockedActions.splice(idx, 1);
       }
-
-      this.unlockedActions.splice(idx, 1);
     });
   }
 
@@ -39,9 +39,8 @@ export class GameStateService{
       if(action.id === id){
         action.unlocked = true;
         this.unlockedActions.push(action);
+        this.lockedActions.splice(idx, 1);
       }
-
-      this.lockedActions.splice(idx, 1);
     });
   }
 }

@@ -15,7 +15,27 @@
     "description": "The singularity burns",
     "costs": [],
     "rewards": ["dark"],
-    "unlocks": [""],
+    "unlocks": ["formation"],
+    "unlocked": false,
+    "repeatable": false
+  },
+  {
+    "id": "formation",
+    "name": "Condense",
+    "description": "Matter has cooled",
+    "costs": [],
+    "rewards": ["rock"],
+    "unlocks": ["beginnings"],
+    "unlocked": false,
+    "repeatable": false
+  },
+  {
+    "id": "beginnings",
+    "name": "Compress",
+    "description": "Birth the planets",
+    "costs": [{"id": "rock", "total": 1}],
+    "rewards": [],
+    "unlocks": [],
     "unlocked": false,
     "repeatable": false
   }
