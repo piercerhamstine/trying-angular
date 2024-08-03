@@ -1,0 +1,11 @@
+div{
+  text-align: center;
+}
+
+div > div{
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 50%;
+  margin: 0;
+}

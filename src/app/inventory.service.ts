@@ -20,8 +20,10 @@ export class InventoryService{
         const items:any = [];
 
         this.currInventory.forEach((value, key)=>{
+            if(value > 0){
             const resourceName = this.resources.get(key)?.name;
             items.push({name: resourceName, id: key, amount: value});
+          }
         })
 
         return items;

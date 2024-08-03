@@ -4,7 +4,7 @@
     "name": "Expand",
     "description": "The Void",
     "costs": [],
-    "rewards": ["light"],
+    "rewards": [{"id": "light", "total": 1}],
     "unlocks": ["primordial"],
     "unlocked": true,
     "repeatable": false
@@ -14,7 +14,7 @@
     "name": "Cooldown",
     "description": "The singularity burns",
     "costs": [],
-    "rewards": ["dark"],
+    "rewards": [{"id": "dark", "total": 1}],
     "unlocks": ["formation"],
     "unlocked": false,
     "repeatable": false
@@ -24,7 +24,7 @@
     "name": "Condense",
     "description": "Matter has cooled",
     "costs": [],
-    "rewards": ["rock"],
+    "rewards": [{"id": "rock", "total": 1}],
     "unlocks": ["beginnings"],
     "unlocked": false,
     "repeatable": false

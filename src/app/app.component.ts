@@ -16,7 +16,7 @@ import { UseableResource } from './gameInterfaces';
         }
       </div>
     `,
-    styleUrls: ['./app.component.css'],
+    styleUrls: ['./styles/app.inventory.css'],
   })
   export class InventoryComponent {
     inventory = inject(InventoryService);
@@ -38,6 +38,9 @@ import { UseableResource } from './gameInterfaces';
       @for(cost of this.costs; track cost.id){
         -{{cost.total}} {{cost.id}}
       }
+      @for(reward of this.rewards; track reward.id){
+        +{{reward.total}} {{reward.id}}
+      }
       </p>
       </div>
     `,
@@ -50,7 +53,7 @@ import { UseableResource } from './gameInterfaces';
       });
 
       this.rewards.forEach((reward)=>{
-        this.inventory.AddResource(reward);
+        this.inventory.AddResource(reward.id);
       })
 
       this.costs.forEach((cost)=>{
@@ -65,7 +68,7 @@ import { UseableResource } from './gameInterfaces';
     @Input() name = "";
     @Input() description = "";
     @Input() costs: UseableResource[] = [];
-    @Input() rewards: string[] = [];
+    @Input() rewards: UseableResource[] = [];
     @Input() unlocks: string[] = [];
     @Input() repeatable = false;
     inventory = inject(InventoryService);
@@ -99,17 +102,15 @@ export class GameActionsComponent {
   template: `
     <div>
         <h1>The Void</h1>
-        <p (click)="OnAdd()">Add Item</p>
-        <p (click)="OnRemove()">Remove Item</p>
+        <div>
         <game-actions/>
         <inventory/>
+        </div>
     </div>
   `,
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'thevoid';
-  OnAdd(){this.inventory.AddResource("light")};
-  OnRemove(){this.inventory.RemoveResource("light", 1)};
   inventory = inject(InventoryService);
 }

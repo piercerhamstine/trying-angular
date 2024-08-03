@@ -13,7 +13,7 @@ export interface GameAction{
     name: string,
     description: string,
     costs: UseableResource[],
-    rewards: string[],
+    rewards: UseableResource[],
     unlocks: string[],
     unlocked: boolean,
     repeatable: boolean
