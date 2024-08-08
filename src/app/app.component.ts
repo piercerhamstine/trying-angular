@@ -4,6 +4,8 @@ import { RouterOutlet } from '@angular/router';
 import { InventoryService } from './inventory.service';
 import { GameStateService } from './gamestate.service';
 import { UseableResource } from './gameInterfaces';
+import { start } from 'repl';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
     selector: 'inventory',
@@ -25,11 +27,15 @@ import { UseableResource } from './gameInterfaces';
 @Component({
     selector: 'action',
     standalone: true,
-    imports: [],
+    imports: [DecimalPipe],
     template: `
       <div>
       <p>{{description}} -
-      @if(this.inventory.CanAffordCosts(this.costs)){
+
+      @if(isRunning){
+        [<a>{{completePercent | number : '2.2-2'}}%</a>]
+      }
+      @else if(this.inventory.CanAffordCosts(this.costs)){
         [<a href=# (click)="OnAction()">{{name}}</a>]
       }@else{
         [<a>Cannot Afford</a>]
@@ -48,21 +54,37 @@ import { UseableResource } from './gameInterfaces';
   })
   export class ActionComponent {
     OnAction(){
-      this.unlocks.forEach((unlock)=>{
-        this.gameState.UnlockAction(unlock);
-      });
+      this.isRunning = true;
+      var startTime = Date.now();
 
-      this.rewards.forEach((reward)=>{
-        this.inventory.AddResource(reward.id);
-      })
+      const iid = setInterval(()=>{
+        var delta = Date.now() - startTime;
+        this.completePercent = ((delta/1000)/10)*100;
 
-      this.costs.forEach((cost)=>{
-        this.inventory.RemoveResource(cost.id, cost.total);
-      });
+        if(this.completePercent > 100){
+          this.completePercent = 100;
+        }
 
-      if(!this.repeatable){
-        this.gameState.LockAction(this.id);
-      }
+        if(delta >= 10000){
+          this.isRunning = false;
+          this.unlocks.forEach((unlock)=>{
+            this.gameState.UnlockAction(unlock);
+          });
+
+          this.rewards.forEach((reward)=>{
+            this.inventory.AddResource(reward.id);
+          })
+
+          this.costs.forEach((cost)=>{
+            this.inventory.RemoveResource(cost.id, cost.total);
+          });
+
+          if(!this.repeatable){
+            this.gameState.LockAction(this.id);
+          }
+          clearInterval(iid);
+        }
+      }, 50);
     }
     @Input() id = "";
     @Input() name = "";
@@ -73,6 +95,9 @@ import { UseableResource } from './gameInterfaces';
     @Input() repeatable = false;
     inventory = inject(InventoryService);
     gameState = inject(GameStateService);
+
+    isRunning = false;
+    completePercent = 0;
 }
 
 @Component({
