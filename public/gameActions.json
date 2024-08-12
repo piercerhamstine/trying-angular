@@ -38,9 +38,31 @@
     "description": "Birth the planets",
     "costs": [{"id": "rock", "total": 1}],
     "rewards": [],
-    "unlocks": [],
+    "unlocks": ["meteors", "meteors2"],
     "unlocked": false,
     "repeatable": false,
+    "timeToComplete": 1
+  },
+  {
+    "id": "meteors",
+    "name": "Rain Down",
+    "description": "The meteorites come",
+    "costs": [],
+    "rewards": [{"id": "rock", "total": 1}],
+    "unlocks": [],
+    "unlocked": false,
+    "repeatable": true,
+    "timeToComplete": 1
+  },
+  {
+    "id": "meteors2",
+    "name": "Run",
+    "description": "This is a test action",
+    "costs": [{"id": "rock", "total": 1}],
+    "rewards": [],
+    "unlocks": [],
+    "unlocked": false,
+    "repeatable": true,
     "timeToComplete": 1
   }
 ]
