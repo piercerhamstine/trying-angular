@@ -59,13 +59,13 @@ import { DecimalPipe } from '@angular/common';
 
       const iid = setInterval(()=>{
         var delta = Date.now() - startTime;
-        this.completePercent = ((delta/1000)/10)*100;
+        this.completePercent = ((delta/1000)/this.timeToComplete)*100;
 
         if(this.completePercent > 100){
           this.completePercent = 100;
         }
 
-        if(delta >= 10000){
+        if(delta >= this.timeToComplete*1000){
           this.isRunning = false;
           this.unlocks.forEach((unlock)=>{
             this.gameState.UnlockAction(unlock);
@@ -93,11 +93,13 @@ import { DecimalPipe } from '@angular/common';
     @Input() rewards: UseableResource[] = [];
     @Input() unlocks: string[] = [];
     @Input() repeatable = false;
-    inventory = inject(InventoryService);
-    gameState = inject(GameStateService);
+    @Input() timeToComplete = 1;
 
     isRunning = false;
     completePercent = 0;
+
+    inventory = inject(InventoryService);
+    gameState = inject(GameStateService);
 }
 
 @Component({
@@ -110,7 +112,7 @@ import { DecimalPipe } from '@angular/common';
             <action [id]=unlockedAction.id [name]=unlockedAction.name
             [description]=unlockedAction.description [unlocks]=unlockedAction.unlocks
             [repeatable]=unlockedAction.repeatable [rewards]=unlockedAction.rewards
-            [costs]=unlockedAction.costs/>
+            [costs]=unlockedAction.costs [timeToComplete]=unlockedAction.timeToComplete/>
         }
       </div>
   `,

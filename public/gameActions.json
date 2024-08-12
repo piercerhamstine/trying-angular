@@ -7,7 +7,8 @@
     "rewards": [{"id": "light", "total": 1}],
     "unlocks": ["primordial"],
     "unlocked": true,
-    "repeatable": false
+    "repeatable": false,
+    "timeToComplete": 1
   },
   {
     "id": "primordial",
@@ -17,7 +18,8 @@
     "rewards": [{"id": "dark", "total": 1}],
     "unlocks": ["formation"],
     "unlocked": false,
-    "repeatable": false
+    "repeatable": false,
+    "timeToComplete": 1
   },
   {
     "id": "formation",
@@ -27,7 +29,8 @@
     "rewards": [{"id": "rock", "total": 1}],
     "unlocks": ["beginnings"],
     "unlocked": false,
-    "repeatable": false
+    "repeatable": false,
+    "timeToComplete": 1
   },
   {
     "id": "beginnings",
@@ -37,6 +40,7 @@
     "rewards": [],
     "unlocks": [],
     "unlocked": false,
-    "repeatable": false
+    "repeatable": false,
+    "timeToComplete": 1
   }
 ]

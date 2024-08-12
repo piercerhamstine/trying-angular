@@ -16,5 +16,6 @@ export interface GameAction{
     rewards: UseableResource[],
     unlocks: string[],
     unlocked: boolean,
-    repeatable: boolean
+    repeatable: boolean,
+    timeToComplete: number
 }
